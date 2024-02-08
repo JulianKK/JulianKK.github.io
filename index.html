@@ -45,5 +45,10 @@
       </div>
     </nav>
     <div id="map"></div>
+    <script>
+      var js_data = '<?php echo json_encode("asdf"); ?>';
+      var js_obj_data = JSON.parse(js_data );
+      console.log(js_obj_data + "test")
+      </script>
   </body>
 </html>
