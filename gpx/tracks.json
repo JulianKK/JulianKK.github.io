@@ -1,0 +1,23 @@
+{
+    "home": [47.72191016016923, 16.042789546032154],
+    "hike": [
+        {
+            "name": "WagnerSteig",
+            "stars": "3",
+            "description": "Eine recht ausgesetzte Runde mit einigen Leitern. Parallel zum Gebirgsvereinststeig. Es gibt auch einen Cache zu finden. Schön aber nix besonderes"
+        },
+        {
+            "name": "test",
+            "stars": "4",
+            "description": "Die gute alte Türkensturzrunde. Bereits mit Alexander gegangen. Endlich wieder geöffnet"
+        }
+    ],
+    "bike": [],
+    "climb": [
+        {
+            "name": "türkensturz",
+            "stars": "5",
+            "description": "Die gute alte Türkensturzrunde. Bereits mit Alexander gegangen. Endlich wieder geöffnet"
+        }
+    ]
+}
