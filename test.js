@@ -48,9 +48,47 @@ const readTracks = (path, tracks, img) => {
           }
         })
         track["track"].addTo(leafletObject.map)
+        track["track"].on("click", (e) => {trackInfo(track)})
       })
       .catch((e) => console.error(e));
   })
+}
+
+const trackInfo = (track) => {
+  const myModal = document.getElementById('myModal')
+  document.getElementById('exampleModalLabel').textContent = track.name.toUpperCase()
+
+  document.getElementById("distance").textContent = (track.track.get_distance() / 1000.0).toFixed(3) + " km"
+  document.getElementById("time").textContent = new Date(track.track.get_total_time()).toUTCString().match("..:..")[0] + " h"
+  document.getElementById("gain").textContent = track.track.get_elevation_gain().toFixed(0) + " m"
+  document.getElementById("description").textContent = track.description
+  document.getElementById("rating").innerHTML = "<span class='fa-solid fa-star checked'></span>".repeat(track.stars)
+
+  new bootstrap.Modal(myModal).toggle()
+  const ctx = document.getElementById('myChart');
+  const hohe = track["track"].get_elevation_data()
+  if (leafletObject.chart != null) {
+    leafletObject.chart.destroy()
+  }
+  leafletObject.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({ length: hohe.length }).map((e, idx) => `${idx}`),
+      datasets: [
+        {
+          label: 'Dataset',
+          data: hohe,
+         // borderColor: Utils.CHART_COLORS.red,
+         // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red),
+          fill: true
+        }
+      ],options: {
+        //Boolean - Whether the line is curved between points
+        bezierCurve : true
+    }
+    }
+  });
+  
 }
 
 
@@ -83,7 +121,7 @@ createTracklist= (newRoutes, type) => {
     console.log(bounds)
     
     newRoutes["helper"] += "<tr onClick=canvasCloseAndFly('" + JSON.stringify(bounds) +"')>" +
-      "<td>" + element.name + "</td>" +
+      "<td>" + element.name.toUpperCase() + "</td>" +
       "<td>" +
       new Date(element.track.get_total_time()).toUTCString().match("..:..")[0] +
       "</td>" +
