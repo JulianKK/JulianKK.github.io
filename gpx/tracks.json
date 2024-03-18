@@ -12,7 +12,12 @@
             "description": "Die gute alte Türkensturzrunde. Bereits mit Alexander gegangen. Endlich wieder geöffnet"
         }
     ],
-    "bike": [],
+    "bike": [
+    {
+        "name": "naturparkSieding",
+        "stars": "4",
+        "description": "Eine Radeltour mit Mountainbike abschnitten, die abschnittsweise zum Absteigen zwingen. Der Naturpark in Sieding ist für die Kinder immer wieder ein Erlebnis"
+    }],
     "climb": [
         {
             "name": "türkensturz",
