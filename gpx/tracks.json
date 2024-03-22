@@ -7,9 +7,9 @@
             "description": "Eine recht ausgesetzte Runde mit einigen Leitern. Parallel zum Gebirgsvereinststeig. Es gibt auch einen Cache zu finden. Schön aber nix besonderes"
         },
         {
-            "name": "test",
+            "name": "rhodos",
             "stars": "4",
-            "description": "Die gute alte Türkensturzrunde. Bereits mit Alexander gegangen. Endlich wieder geöffnet"
+            "description": "Urlaub 2023. War echt super. All Inclusive mit leckerem essen und leckeren Getränken ;)."
         }
     ],
     "bike": [
@@ -17,6 +17,11 @@
         "name": "naturparkSieding",
         "stars": "4",
         "description": "Eine Radeltour mit Mountainbike abschnitten, die abschnittsweise zum Absteigen zwingen. Der Naturpark in Sieding ist für die Kinder immer wieder ein Erlebnis"
+    },
+    {
+        "name": "petersberg",
+        "stars": "4",
+        "description": "Eine kleine Mountainbike tour die schon mit Alexander gut zu fahren ist."
     }],
     "climb": [
         {

@@ -4,6 +4,9 @@ const leafletObject = {
 
 const load = () => {
   leafletObject.map = L.map('map').setView(leafletObject.home, 13);
+  leafletObject.map.on("click", (e) => {
+       trackClicked(null)
+     })
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -12,7 +15,6 @@ const load = () => {
   L.marker(leafletObject.home, { icon: houseIcon }).addTo(leafletObject.map);
 
   initTracks()
-  console.log(leafletObject)
 }
 
 const initTracks = () => {
@@ -45,16 +47,20 @@ const readTracks = (path, tracks, img) => {
             startIconUrl: './style/img/pin-icon-start.png',
             endIconUrl: './style/img/pin-icon-end.png',
             shadowUrl: './style/img/pin-shadow.png'
-          }
+          }, polyline_options: {color: 'darkblue'}
         })
         track["track"].addTo(leafletObject.map)
-        track["track"].on("click", (e) => {trackInfo(track)})
+        track["track"].bindPopup(createPopup(track))
+        track["track"].on("click", (e) => {
+          trackClicked(track["track"])
+        })
       })
-      .catch((e) => console.error(e));
+      .catch((e) => console.error(e))
   })
 }
 
 const trackInfo = (track) => {
+  
   const myModal = document.getElementById('myModal')
   document.getElementById('exampleModalLabel').textContent = track.name.toUpperCase()
 
@@ -63,6 +69,8 @@ const trackInfo = (track) => {
   document.getElementById("gain").textContent = track.track.get_elevation_gain().toFixed(0) + " m"
   document.getElementById("description").textContent = track.description
   document.getElementById("rating").innerHTML = "<span class='fa-solid fa-star checked'></span>".repeat(track.stars)
+
+  createImgView(track.name)
 
   new bootstrap.Modal(myModal).toggle()
   const ctx = document.getElementById('myChart');
@@ -105,36 +113,40 @@ const flyToBoarder = (border) => {
 
 const canvasShow = (type) => {
   document.getElementById('offcanvasExampleLabel').textContent = type.toUpperCase();
-  document.getElementById("routes").innerHTML = ""
+  const routes = document.getElementById("routes")
   routes.innerHTML = ""
-  const newRoutes = { "helper": "" }
+  const newRoutes = { "helper": routes }
   type === "all" 
   ? ["hike", "bike", "climb"].forEach(part => createTracklist(newRoutes, part))
   : createTracklist(newRoutes, type)
   
-  document.getElementById("routes").innerHTML += newRoutes["helper"]
+
 }
 
 createTracklist= (newRoutes, type) => {
   leafletObject.tracks[type].forEach(element => {
-    const bounds = element.track.getBounds()
-    console.log(bounds)
+    const tr = document.createElement("tr");
+    tr.onclick = function() {
+      canvasCloseAndFly(element.track)
+      trackClicked(element.track)
+    }
+    tr.innerHTML = "<td>" + element.name.toUpperCase() + "</td>" +
+    "<td>" +
+    new Date(element.track.get_total_time()).toUTCString().match("..:..")[0] +
+    "</td>" +
+    "<td>" + "<span class='fa-solid fa-star checked'></span>".repeat(element.stars) + "</td>" +
+      "</tr>"
     
-    newRoutes["helper"] += "<tr onClick=canvasCloseAndFly('" + JSON.stringify(bounds) +"')>" +
-      "<td>" + element.name.toUpperCase() + "</td>" +
-      "<td>" +
-      new Date(element.track.get_total_time()).toUTCString().match("..:..")[0] +
-      "</td>" +
-      "<td>" + "<span class='fa-solid fa-star checked'></span>".repeat(element.stars) + "</td>" +
-        "</tr>"
+    newRoutes["helper"].appendChild(tr)
+      
   })
 }
 
-const canvasCloseAndFly = (bounds) => {
-  console.log(bounds)
+const canvasCloseAndFly = (track) => {
   bootstrap.Offcanvas.getInstance(offcanvasExample).hide();
-  flyToBoarder(JSON.parse(bounds))
+  flyToBoarder(track.getBounds())
 }
+
 
 
 
@@ -144,3 +156,37 @@ const houseIcon = L.icon({
   iconSize: [38, 38], // size of the icon
   iconAnchor: [37, 37]
 });
+
+const createImgView = (name) => {
+  document.getElementById("img1").src = './style/img/tour/' + name + '/img1.jpeg'
+  document.getElementById("img2").src = './style/img/tour/' + name + '/img2.jpeg'
+  document.getElementById("img3").src = './style/img/tour/' + name + '/img3.jpeg'
+
+  document.getElementById("himg1").href = './style/img/tour/' + name + '/img1.jpeg'
+  document.getElementById("himg2").href = './style/img/tour/' + name + '/img2.jpeg'
+  document.getElementById("himg3").href = './style/img/tour/' + name + '/img3.jpeg'
+}
+
+const trackClicked = (track) => {
+  if (leafletObject["selected"] != null) 
+  leafletObject["selected"].setStyle({
+    color: 'darkblue'
+  });
+
+  track && track.setStyle({
+    color: 'blue'
+  });
+
+  leafletObject["selected"] = track
+}
+
+const createPopup = (element) => {
+  const button = document.createElement("button");
+    button.innerHTML = "Zeige Infos";
+    button.className = "btn btn-primary"
+
+    button.onclick = function() {
+      trackInfo(element)
+    }
+    return button
+}
