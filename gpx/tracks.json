@@ -10,6 +10,11 @@
             "name": "rhodos",
             "stars": "4",
             "description": "Urlaub 2023. War echt super. All Inclusive mit leckerem essen und leckeren Getränken ;)."
+        },
+        {
+            "name": "bayerisch-gmain",
+            "stars": "5",
+            "description": "Da war die Maria mit dem Alexander unterwegs urlaub machen. War wohl sehr cool."
         }
     ],
     "bike": [
@@ -28,6 +33,11 @@
             "name": "türkensturz",
             "stars": "5",
             "description": "Die gute alte Türkensturzrunde. Bereits mit Alexander gegangen. Endlich wieder geöffnet"
+        },
+        {
+            "name": "falkenstein_klettersteig",
+            "stars": "5",
+            "description": "Cooler Steig mit einer eindrucksvollen Ein-Seil-Brücke. Hab ich auch schonmal mit Oliver gemacht."
         }
     ]
 }
