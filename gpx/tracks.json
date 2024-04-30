@@ -28,11 +28,26 @@
         "description": "Eine Radeltour mit Mountainbike abschnitten, die abschnittsweise zum Absteigen zwingen. Der Naturpark in Sieding ist für die Kinder immer wieder ein Erlebnis"
     },
     {
+        "name": "ternitz-puchberg",
+        "stars": "5",
+        "description": "Eine Radeltour mit Mountainbike abschnitten, macht sehr viel spaß. Viele  höhenmeter aber auf die gesamte strecke verteilt"
+    },
+    {
         "name": "petersberg",
         "stars": "4",
         "description": "Eine kleine Mountainbike tour die schon mit Alexander gut zu fahren ist."
     }],
     "climb": [
+        {
+            "name": "hochlantsch-Franz-Scheikl-Steig",
+            "stars": "5",
+            "description": "Eine Tolle tour. Gar nicht so leicht. Hochalpin hoch hinaus. Es gibt auch den steirer jockl, ein gasthaus auf dem berg. Und eine Kirche"
+        },
+        {
+            "name": "kleine-klause",
+            "stars": "4",
+            "description": "Ein sehr kleiner Klettersteig. Man braucht kein set aber es ist withig. Ganz schön steil zeitweise"
+        },
         {
             "name": "türkensturz",
             "stars": "5",

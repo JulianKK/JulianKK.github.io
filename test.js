@@ -5,8 +5,8 @@ const leafletObject = {
 const load = () => {
   leafletObject.map = L.map('map').setView(leafletObject.home, 13);
   leafletObject.map.on("click", (e) => {
-       trackClicked(null)
-     })
+    trackClicked(null)
+  })
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -47,7 +47,7 @@ const readTracks = (path, tracks, img) => {
             startIconUrl: './style/img/pin-icon-start.png',
             endIconUrl: './style/img/pin-icon-end.png',
             shadowUrl: './style/img/pin-shadow.png'
-          }, polyline_options: {color: 'darkblue'}
+          }, polyline_options: { color: 'darkblue' }
         })
         track["track"].addTo(leafletObject.map)
         track["track"].bindPopup(createPopup(track))
@@ -60,7 +60,7 @@ const readTracks = (path, tracks, img) => {
 }
 
 const trackInfo = (track) => {
-  
+
   const myModal = document.getElementById('myModal')
   document.getElementById('exampleModalLabel').textContent = track.name.toUpperCase()
 
@@ -84,19 +84,38 @@ const trackInfo = (track) => {
       labels: Array.from({ length: hohe.length }).map((e, idx) => `${idx}`),
       datasets: [
         {
-          label: 'Dataset',
+          label: 'Höhenprofil',
           data: hohe,
-         // borderColor: Utils.CHART_COLORS.red,
-         // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red),
+          // borderColor: Utils.CHART_COLORS.red,
+          // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red),
           fill: true
         }
-      ],options: {
-        //Boolean - Whether the line is curved between points
-        bezierCurve : true
-    }
+      ]
+    }, options: {
+      //Boolean - Whether the line is curved between points
+      bezierCurve: true,
+      scales: {
+        y: {
+
+          ticks: {
+            callback: function (value, index, ticks) {
+                return value + " m"
+            }
+          }
+        },
+        x: {
+          ticks: {
+            callback: function (value, index, ticks) {
+              const max = Math.max(...ticks.map(thing => thing.value))
+              const norm = value / max
+                return (norm * (track.track.get_distance() / 1000.0)).toFixed(1) + " km"
+            }
+          }
+        }
+      }
     }
   });
-  
+
 }
 
 
@@ -116,29 +135,29 @@ const canvasShow = (type) => {
   const routes = document.getElementById("routes")
   routes.innerHTML = ""
   const newRoutes = { "helper": routes }
-  type === "all" 
-  ? ["hike", "bike", "climb"].forEach(part => createTracklist(newRoutes, part))
-  : createTracklist(newRoutes, type)
-  
+  type === "all"
+    ? ["hike", "bike", "climb"].forEach(part => createTracklist(newRoutes, part))
+    : createTracklist(newRoutes, type)
+
 
 }
 
-createTracklist= (newRoutes, type) => {
+createTracklist = (newRoutes, type) => {
   leafletObject.tracks[type].forEach(element => {
     const tr = document.createElement("tr");
-    tr.onclick = function() {
+    tr.onclick = function () {
       canvasCloseAndFly(element.track)
       trackClicked(element.track)
     }
     tr.innerHTML = "<td>" + element.name.toUpperCase() + "</td>" +
-    "<td>" +
-    new Date(element.track.get_total_time()).toUTCString().match("..:..")[0] +
-    "</td>" +
-    "<td>" + "<span class='fa-solid fa-star checked'></span>".repeat(element.stars) + "</td>" +
+      "<td>" +
+      new Date(element.track.get_total_time()).toUTCString().match("..:..")[0] +
+      "</td>" +
+      "<td>" + "<span class='fa-solid fa-star checked'></span>".repeat(element.stars) + "</td>" +
       "</tr>"
-    
+
     newRoutes["helper"].appendChild(tr)
-      
+
   })
 }
 
@@ -168,10 +187,10 @@ const createImgView = (name) => {
 }
 
 const trackClicked = (track) => {
-  if (leafletObject["selected"] != null) 
-  leafletObject["selected"].setStyle({
-    color: 'darkblue'
-  });
+  if (leafletObject["selected"] != null)
+    leafletObject["selected"].setStyle({
+      color: 'darkblue'
+    });
 
   track && track.setStyle({
     color: 'blue'
@@ -182,11 +201,11 @@ const trackClicked = (track) => {
 
 const createPopup = (element) => {
   const button = document.createElement("button");
-    button.innerHTML = "Zeige Infos";
-    button.className = "btn btn-primary"
+  button.innerHTML = "Zeige Infos";
+  button.className = "btn btn-primary"
 
-    button.onclick = function() {
-      trackInfo(element)
-    }
-    return button
+  button.onclick = function () {
+    trackInfo(element)
+  }
+  return button
 }
