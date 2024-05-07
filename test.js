@@ -3,17 +3,45 @@ const leafletObject = {
 }
 
 const load = () => {
-  leafletObject.map = L.map('map').setView(leafletObject.home, 13);
-  leafletObject.map.on("click", (e) => {
-    trackClicked(null)
-  })
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const osMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(leafletObject.map);
+  })
+
+  const googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+  });
+
+  var thunderForest = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
+    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    apikey: 'eb705312dff74a4ba9be9b97ec898203',
+    maxZoom: 22
+  });
+
+  const googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+  });
+
+  leafletObject.map = L.map('map', { center: leafletObject.home, zoom: 13, zoomControl: false })
 
   L.marker(leafletObject.home, { icon: houseIcon }).addTo(leafletObject.map);
 
+  leafletObject.baseMaps = {
+    "osMap": osMap,
+    "googleSatelite": googleSat,
+    "thunderForest": thunderForest,
+    "googleHybrid": googleHybrid,
+  }
+
+  leafletObject.map.on("click", (e) => {
+    trackClicked(null)
+  })
+  osMap.addTo(leafletObject.map)
+  L.control.layers(leafletObject.baseMaps).addTo(leafletObject.map)
+  L.control.scale({ position: 'topleft' }).addTo(leafletObject.map);
+  L.control.measure({ position: 'topleft' }).addTo(leafletObject.map);
   initTracks()
 }
 
@@ -99,7 +127,7 @@ const trackInfo = (track) => {
 
           ticks: {
             callback: function (value, index, ticks) {
-                return value + " m"
+              return value + " m"
             }
           }
         },
@@ -108,7 +136,7 @@ const trackInfo = (track) => {
             callback: function (value, index, ticks) {
               const max = Math.max(...ticks.map(thing => thing.value))
               const norm = value / max
-                return (norm * (track.track.get_distance() / 1000.0)).toFixed(1) + " km"
+              return (norm * (track.track.get_distance() / 1000.0)).toFixed(1) + " km"
             }
           }
         }

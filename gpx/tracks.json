@@ -1,5 +1,8 @@
 {
-    "home": [47.72191016016923, 16.042789546032154],
+    "home": [
+        47.72191016016923,
+        16.042789546032154
+    ],
     "hike": [
         {
             "name": "WagnerSteig",
@@ -10,10 +13,11 @@
             "name": "rhodos",
             "stars": "4",
             "description": "Urlaub 2023. War echt super. All Inclusive mit leckerem essen und leckeren Getränken ;)."
-        },{
-          "name": "seestadt",
-          "stars": "5",
-          "description": "War ein cooler ausflug in die Seestadt. Dort waren wir im dialog im dunkeln und haben uns die seestadt angesehen. "
+        },
+        {
+            "name": "seestadt",
+            "stars": "5",
+            "description": "War ein cooler ausflug in die Seestadt. Dort waren wir im dialog im dunkeln und haben uns die seestadt angesehen. "
         },
         {
             "name": "bayerisch-gmain",
@@ -22,21 +26,27 @@
         }
     ],
     "bike": [
-    {
-        "name": "naturparkSieding",
-        "stars": "4",
-        "description": "Eine Radeltour mit Mountainbike abschnitten, die abschnittsweise zum Absteigen zwingen. Der Naturpark in Sieding ist für die Kinder immer wieder ein Erlebnis"
-    },
-    {
-        "name": "ternitz-puchberg",
-        "stars": "5",
-        "description": "Eine Radeltour mit Mountainbike abschnitten, macht sehr viel spaß. Viele  höhenmeter aber auf die gesamte strecke verteilt"
-    },
-    {
-        "name": "petersberg",
-        "stars": "4",
-        "description": "Eine kleine Mountainbike tour die schon mit Alexander gut zu fahren ist."
-    }],
+        {
+            "name": "ternitz-reichenau",
+            "stars": "3",
+            "description": "Eine Tour mit vielen Kilometern. Man fährt durch Glocknitz und fährt entlang von der Schwarza und den Bahngleisen"
+        },
+        {
+            "name": "naturparkSieding",
+            "stars": "4",
+            "description": "Eine Radeltour mit Mountainbike abschnitten, die abschnittsweise zum Absteigen zwingen. Der Naturpark in Sieding ist für die Kinder immer wieder ein Erlebnis"
+        },
+        {
+            "name": "ternitz-puchberg",
+            "stars": "5",
+            "description": "Eine Radeltour mit Mountainbike abschnitten, macht sehr viel spaß. Viele  höhenmeter aber auf die gesamte strecke verteilt"
+        },
+        {
+            "name": "petersberg",
+            "stars": "4",
+            "description": "Eine kleine Mountainbike tour die schon mit Alexander gut zu fahren ist."
+        }
+    ],
     "climb": [
         {
             "name": "hochlantsch-Franz-Scheikl-Steig",
